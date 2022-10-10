@@ -1,0 +1,73 @@
+<app-header></app-header>
+<div class=" container col-sm-6 col-md-6 col-lg-6">
+    <h1 style="font-size: large;" for="">Enter Your Details</h1>
+    <form #f="ngForm" (ngSubmit)="onBook(f)">
+        <div class="form-group">
+            <mat-form-field appearance="outline" class="myclass" [color]="'accent'">
+                <mat-label for="">Username</mat-label>
+                <input style="height: 20px;" matInput #username="ngModel" ngModel name="username" type="text" placeholder="Enter the username" [pattern]="name_pattern" required>
+
+                <mat-error *ngIf="username.touched && !username.valid"> ** Please Enter the userame</mat-error>
+                <mat-error *ngIf="username.errors?.pattern">Please enter alphabets only</mat-error>
+
+
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="myclass" [color]="'accent'">
+                <mat-label for="">Currency Pair</mat-label>
+                <mat-select required #currencyPair="ngModel" ngModel name="currencyPair" placeholder="Select the currencyPair" [pattern]="usdinr">
+                    <mat-option>---</mat-option>
+                    <mat-option *ngFor="let item of currencyPairsSelect" [value]="item">
+                        {{item}}
+                    </mat-option>
+                </mat-select>
+
+                <mat-error *ngIf="currencyPair.touched && !currencyPair.valid">Please select the currency pair</mat-error>
+                <mat-error *ngIf="currencyPair.errors?.pattern">USDINR only approved</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="myclass" [color]="'accent'">
+                <mat-label for="">Transfer Amount</mat-label>
+                <input style="height: 20px;" matInput #transferAmount="ngModel" ngModel name="transferAmount" type="text" placeholder="Enter the transfer amount" [pattern]="amount_pattern" required>
+                <mat-error *ngIf="transferAmount.touched && !transferAmount.valid"> ** Please Enter the transferAmount</mat-error>
+                <mat-error *ngIf="transferAmount.errors?.pattern">Please Enter numbers only</mat-error>
+
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="myclass" [color]="'accent'">
+                <mat-label for="">Tranfer Rate (default={{isRate|number}})</mat-label>
+                <input style="height: 20px;" matInput #tranferRate="ngModel" ngModel name="tranferRate" type="text" placeholder="Enter the tranfer rate" [pattern]="amount_pattern" required>
+                <mat-error *ngIf="tranferRate.errors?.pattern">Please Enter numbers only</mat-error>
+            </mat-form-field>
+
+            <mat-label for="">Do you want to know rate?</mat-label>
+            <mat-select required #rateStatus="ngModel" ngModel name="rateStatus" placeholder="Yes/No" [pattern]="yes">
+                <mat-option>---</mat-option>
+                <mat-option *ngFor="let item of yesOrno" [value]="item">
+                    {{item}}
+                </mat-option>
+            </mat-select>
+            <br><br>
+            <button class="btn btn-dark" routerLink="/FxTradeBooking">Dash Board</button> &nbsp;
+            <button class="btn btn-success">Book</button>&nbsp;
+            <button class="btn btn-info" routerLink="/PrintTrade">Trade Info</button>
+
+            <ng-template #popUp>
+                <button (click)="modalRef.hide()" class="btn btn-danger">Cancel</button>
+            </ng-template>
+            <br><br>
+        </div>
+    </form>
+
+    <div *ngIf="rateStatus.value =='Yes' && isRateEnable">
+        <h6 *ngIf="rateStatus.value == 'Yes' && isRateEnable">Rate : You are transferring INR {{tempTransferAmount}} to {{name}} Assuming that rate was ₹{{isRate|number}}</h6>
+    </div>
+
+    <div *ngIf="status==true;else myelsepart">
+        <h6>Status : Trade for {{curPair}} has been booked with rate ₹{{rate}}, The amount of {{tempTransferAmount}} will be transferred in 2 working days to {{name}}.</h6>
+    </div>
+
+<ng-template #myelsepart>
+        <h6>Status : Trade Not Yet Booked</h6>
+        <h6>{{tradeStatus}}</h6>
+    </ng-template>
