@@ -1,0 +1,26 @@
+<app-header></app-header>
+<div>
+<table class="table table-bordered table-hover">
+    <thead class="table-primary">
+      <th>ID</th>
+      <th>TradeNo</th>
+      <th>CurrencyPair</th>
+      <th>TransferAmount</th>
+      <th>TransferRate</th>
+    </thead>
+    <tbody class="table-active">
+      <tr *ngFor="let item of arObj | paginate: { itemsPerPage: 10, currentPage: p }; ">
+        <td class="table-primary">{{item.tradeNo}}</td>
+        <td>{{item.username}}</td>
+        <td>{{item.currencyPair}}</td>
+        <td>{{item.transferAmount}}</td>
+        <td>{{item.tranferRate}}</td>
+      </tr>
+    </tbody>
+</table>
+<pagination-controls (pageChange)="p = $event" style="float:right ;"></pagination-controls>
+</div>
+<br>
+<button class="btn btn-dark" routerLink="/FxTradeBooking">Dash Board</button>
+&nbsp;
+<button class="btn btn-success" routerLink="/BookTrade">Book Trade</button>
