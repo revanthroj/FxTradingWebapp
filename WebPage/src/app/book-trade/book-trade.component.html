@@ -34,7 +34,7 @@
                 <input style="height: 20px;" matInput #tranferRate="ngModel" ngModel name="tranferRate" type="text" placeholder="Enter the tranfer rate" [pattern]="amount_pattern" required>
                 <mat-error *ngIf="tranferRate.errors?.pattern">Please Enter numbers only</mat-error>
             </mat-form-field> -->
-            <mat-label for="">Default USD to INR transfer rate : ₹{{isRate|number:'1.2-2'}}</mat-label>
+            <mat-label for="">Default USD to INR exchange rate : ₹{{isRate|number:'1.2-2'}}</mat-label>
 <br><br>
             <ng-template #popUp>
                 <button (click)="modalRef.hide()" class="btn btn-danger">Cancel</button>
